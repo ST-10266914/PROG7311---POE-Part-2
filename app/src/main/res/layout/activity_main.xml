@@ -36,6 +36,13 @@
             android:layout_marginTop="16dp"/>
 
         <Button
+            android:id="@+id/btnManageCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Categories"
+            android:layout_marginTop="16dp"/>
+
+        <Button
             android:id="@+id/btnCategorySummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
