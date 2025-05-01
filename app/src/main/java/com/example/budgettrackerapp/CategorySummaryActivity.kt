@@ -48,6 +48,7 @@ class CategorySummaryActivity : AppCompatActivity() {
         }
     }
 
+    //A fuction for the view summary of the categories added
     private fun viewSummary(startDate: Long, endDate: Long) {
         lifecycleScope.launch {
             try {
