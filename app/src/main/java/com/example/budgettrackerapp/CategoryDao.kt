@@ -10,16 +10,15 @@ import androidx.room.Update
 
 @Dao
 interface CategoryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategory(category: Category): Long
-
+//For updating data in the roomdb table
     @Update
     suspend fun updateCategory(category: Category): Int
 
-
+//For inserting data into the roomdb table
     @Insert
     fun insertCategory(category: Category)
 
+//For retrieving all info from table
     @Query("SELECT * FROM Category WHERE userId = :userId")
     suspend fun getAllCategories(userId: String): List<Category>
 
