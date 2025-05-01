@@ -1,23 +1,26 @@
-package com.example.budgettrackerapp
+package com.example.budgettrackerapp.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
+
 @Dao
 interface CategoryDao {
-
-    @Insert
-    suspend fun insertCategory(category: Category)
-
-    @Query("SELECT * FROM Category")
-    suspend fun getAllCategories(): List<Category>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategory(category: Category): Long
 
     @Update
-    suspend fun update(category: Category)
+    suspend fun updateCategory(category: Category): Int
 
     @Delete
-    suspend fun delete(category: Category)
+    suspend fun deleteCategory(category: Category): Int
+
+    @Query("SELECT * FROM categories")
+    suspend fun getAllCategories(): List<Category>
+
+
 }

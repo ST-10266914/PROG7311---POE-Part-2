@@ -3,30 +3,93 @@ package com.example.budgettrackerapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var btnManageCategory: Button
+    private lateinit var btnAddExpense: Button
+    private lateinit var btnViewExpenses: Button
+    private lateinit var btnManageCategories: Button
     private lateinit var btnCategorySummary: Button
+    private lateinit var btnSettings: Button
+    private lateinit var btnLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnManageCategory = findViewById(R.id.btnManageCategory)
+        btnAddExpense = findViewById(R.id.btnAddExpense)
+        btnViewExpenses = findViewById(R.id.btnViewExpenses)
+        btnManageCategories = findViewById(R.id.btnManageCategory)
         btnCategorySummary = findViewById(R.id.btnCategorySummary)
+        btnSettings = findViewById(R.id.btnSettings)
+        btnLogout = findViewById(R.id.btnLogout)
 
-
-        btnManageCategory.setOnClickListener {
-            startActivity(Intent(this, CategoryListActivity::class.java))
+        // Navigate to Add Expense screen
+        btnAddExpense.setOnClickListener {
+            try {
+                val intent = Intent(this, ExpenseEntryActivity::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        btnCategorySummary.setOnClickListener {
-            startActivity(Intent(this, CategorySummaryActivity::class.java))
+        // Navigate to View Expenses screen
+        btnViewExpenses.setOnClickListener {
+            try {
+                val intent = Intent(this, ExpenseListActivity::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+        btnManageCategories.setOnClickListener {
+            try {
+                val intent = Intent(this, CategoryListActivity::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+            // Navigate to Category Summary screen
+            btnCategorySummary.setOnClickListener {
+                try {
+                    val intent = Intent(this, CategorySummaryActivity::class.java)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            // Navigate to Settings screen
+            //  btnSettings.setOnClickListener {
+            // try {
+            //  val intent = Intent(this, SettingsActivity::class.java)
+            //  startActivity(intent)
+            // } catch (e: Exception) {
+            //   e.printStackTrace()
+            ///   Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            // }
+            //  }
+
+            // Logout user and return to Login screen (Optional)
+            // btnLogout.setOnClickListener {
+            //  try {
+            // Implement logout logic here (e.g., Firebase logout)
+            // FirebaseAuth.getInstance().signOut()
+            //val intent = Intent(this, LoginActivity::class.java)
+            //startActivity(intent)
+            // finish() // Close MainActivity
+            //  } catch (e: Exception) {
+            // e.printStackTrace()
+            // Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            //}
+            // }
         }
     }
 }
