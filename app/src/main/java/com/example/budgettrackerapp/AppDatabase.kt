@@ -11,6 +11,7 @@ import com.example.budgettrackerapp.data.model.Category
 
 @Database(entities = [Expense::class, Category::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
+    //Decaalring Database in Roomdb
     abstract fun expenseDao(): ExpenseDao
     abstract fun categoryDao(): CategoryDao
 
