@@ -37,6 +37,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+//For loading the min/max goals created
     private fun loadGoals() {
         val sharedPref = getSharedPreferences("goals", Context.MODE_PRIVATE)
         val minGoal = sharedPref.getFloat("minGoal", 0f)
@@ -45,6 +46,7 @@ class SettingsActivity : AppCompatActivity() {
         etMaxGoal.setText(maxGoal.toString())
     }
 
+    //For saving the goals after entering the info
     private fun saveGoals() {
         val minGoal = etMinGoal.text.toString().toFloatOrNull() ?: 0f
         val maxGoal = etMaxGoal.text.toString().toFloatOrNull() ?: 0f
