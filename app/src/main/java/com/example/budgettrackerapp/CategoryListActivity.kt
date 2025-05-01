@@ -5,14 +5,14 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import com.example.budgettrackerapp.data.model.Category
+import com.example.budgettrackerapp.data.dao.CategoryDao
+import com.example.budgettrackerapp.AppDatabase
 
 class CategoryListActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase
@@ -47,10 +47,24 @@ class CategoryListActivity : AppCompatActivity() {
             val categoryName = etNewCategory.text.toString().trim()
             if (categoryName.isNotEmpty()) {
                 lifecycleScope.launch {
-                    categoryDao.insertCategory(Category(name = categoryName, userId = userId))
-                    etNewCategory.text.clear()
-                    loadCategories()
+
+                    try {
+                        val existingCategory = categoryDao.getCategoryByName(categoryName)
+                        if (existingCategory == null) {
+                            categoryDao.insertCategory(Category(name = categoryName))
+                            etNewCategory.text.clear()
+                            loadCategories()
+                            Toast.makeText(this@CategoryListActivity, "Category added successfully!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this@CategoryListActivity, "Category already exists!", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@CategoryListActivity, "Failed to add category: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
+            } else {
+                Toast.makeText(this@CategoryListActivity, "Category name cannot be empty!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -65,6 +79,7 @@ class CategoryListActivity : AppCompatActivity() {
             categoryList.addAll(all)
             adapter.notifyDataSetChanged()
         }
+
     }
 
 
