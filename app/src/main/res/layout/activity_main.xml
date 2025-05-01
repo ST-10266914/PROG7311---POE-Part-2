@@ -65,6 +65,4 @@
             android:backgroundTint="@android:color/holo_red_light"/>
 
     </LinearLayout>
-
-
 </ScrollView>
