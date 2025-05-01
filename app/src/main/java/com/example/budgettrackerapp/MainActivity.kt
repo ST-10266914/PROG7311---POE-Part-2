@@ -66,30 +66,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            // Navigate to Settings screen
-            //  btnSettings.setOnClickListener {
-            // try {
-            //  val intent = Intent(this, SettingsActivity::class.java)
-            //  startActivity(intent)
-            // } catch (e: Exception) {
-            //   e.printStackTrace()
-            ///   Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            // }
-            //  }
+            Navigate to Settings screen
+             btnSettings.setOnClickListener {
+            try {
+             val intent = Intent(this, SettingsActivity::class.java)
+             startActivity(intent)
+            } catch (e: Exception) {
+              e.printStackTrace()
+            /   Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+             }
 
-            // Logout user and return to Login screen (Optional)
-            // btnLogout.setOnClickListener {
-            //  try {
-            // Implement logout logic here (e.g., Firebase logout)
-            // FirebaseAuth.getInstance().signOut()
-            //val intent = Intent(this, LoginActivity::class.java)
-            //startActivity(intent)
-            // finish() // Close MainActivity
-            //  } catch (e: Exception) {
-            // e.printStackTrace()
-            // Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            //}
-            // }
+        
         }
     }
 }
