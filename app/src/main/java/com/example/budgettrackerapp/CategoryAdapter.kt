@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 
+//Allows to add functionality for edit and delete buttons fro categories
 class CategoryAdapter(
     private val context: Context,
     private val categories: MutableList<Category>,
