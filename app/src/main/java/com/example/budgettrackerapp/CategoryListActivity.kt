@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class CategoryListActivity : AppCompatActivity() {
@@ -33,6 +34,7 @@ class CategoryListActivity : AppCompatActivity() {
         etNewCategory = findViewById(R.id.etNewCategory)
         btnAddCategory = findViewById(R.id.btnAddCategory)
 
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         adapter = CategoryAdapter(this, categoryList,
             onEdit = { category -> showEditDialog(category) },
             onDelete = { category -> deleteCategory(category) }
@@ -45,7 +47,7 @@ class CategoryListActivity : AppCompatActivity() {
             val categoryName = etNewCategory.text.toString().trim()
             if (categoryName.isNotEmpty()) {
                 lifecycleScope.launch {
-                    categoryDao.insertCategory(Category(name = categoryName))
+                    categoryDao.insertCategory(Category(name = categoryName, userId = userId))
                     etNewCategory.text.clear()
                     loadCategories()
                 }
@@ -54,8 +56,11 @@ class CategoryListActivity : AppCompatActivity() {
     }
 
     private fun loadCategories() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
         lifecycleScope.launch {
-            val all = categoryDao.getAllCategories()
+            val all = categoryDao.getAllCategories(userId)
+            val userCategories = categoryDao.getAllCategories(userId)
             categoryList.clear()
             categoryList.addAll(all)
             adapter.notifyDataSetChanged()
@@ -82,7 +87,6 @@ class CategoryListActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", null)
             .show()
     }
-
 
     private fun deleteCategory(category: Category) {
         AlertDialog.Builder(this)

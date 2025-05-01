@@ -10,14 +10,15 @@ import androidx.room.Update
 interface CategoryDao {
 
     @Insert
-    suspend fun insertCategory(category: Category)
+    fun insertCategory(category: Category)
 
-    @Query("SELECT * FROM Category")
-    suspend fun getAllCategories(): List<Category>
+    @Query("SELECT * FROM Category WHERE userId = :userId")
+    suspend fun getAllCategories(userId: String): List<Category>
 
     @Update
     suspend fun update(category: Category)
 
     @Delete
     suspend fun delete(category: Category)
+
 }
