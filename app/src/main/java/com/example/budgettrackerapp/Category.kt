@@ -7,5 +7,11 @@ import androidx.room.PrimaryKey
 data class Category(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
+
+    val userId: String
+)
+
+
     val totalAmount: Double = 0.0 // Default to 0.0 if no value is set
 )
+

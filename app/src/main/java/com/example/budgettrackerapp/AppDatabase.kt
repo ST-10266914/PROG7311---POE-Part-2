@@ -14,6 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao
     abstract fun categoryDao(): CategoryDao
 
+
     companion object {
         private var INSTANCE: AppDatabase? = null
 

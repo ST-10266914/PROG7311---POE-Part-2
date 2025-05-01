@@ -16,11 +16,21 @@ interface CategoryDao {
     @Update
     suspend fun updateCategory(category: Category): Int
 
+
+    @Insert
+    fun insertCategory(category: Category)
+
+    @Query("SELECT * FROM Category WHERE userId = :userId")
+    suspend fun getAllCategories(userId: String): List<Category>
+
     @Delete
     suspend fun deleteCategory(category: Category): Int
 
     @Query("SELECT * FROM categories")
     suspend fun getAllCategories(): List<Category>
+
+
+
 
 
 }

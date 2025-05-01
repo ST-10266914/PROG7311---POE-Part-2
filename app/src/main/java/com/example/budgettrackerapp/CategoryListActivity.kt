@@ -8,6 +8,7 @@ import android.widget.ListView
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import com.example.budgettrackerapp.data.model.Category
 import com.example.budgettrackerapp.data.dao.CategoryDao
@@ -33,6 +34,7 @@ class CategoryListActivity : AppCompatActivity() {
         etNewCategory = findViewById(R.id.etNewCategory)
         btnAddCategory = findViewById(R.id.btnAddCategory)
 
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         adapter = CategoryAdapter(this, categoryList,
             onEdit = { category -> showEditDialog(category) },
             onDelete = { category -> deleteCategory(category) }
@@ -45,6 +47,7 @@ class CategoryListActivity : AppCompatActivity() {
             val categoryName = etNewCategory.text.toString().trim()
             if (categoryName.isNotEmpty()) {
                 lifecycleScope.launch {
+
                     try {
                         val existingCategory = categoryDao.getCategoryByName(categoryName)
                         if (existingCategory == null) {
@@ -58,6 +61,7 @@ class CategoryListActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         Toast.makeText(this@CategoryListActivity, "Failed to add category: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
+
                 }
             } else {
                 Toast.makeText(this@CategoryListActivity, "Category name cannot be empty!", Toast.LENGTH_SHORT).show()
@@ -66,7 +70,15 @@ class CategoryListActivity : AppCompatActivity() {
     }
 
     private fun loadCategories() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
         lifecycleScope.launch {
+            val all = categoryDao.getAllCategories(userId)
+            val userCategories = categoryDao.getAllCategories(userId)
+            categoryList.clear()
+            categoryList.addAll(all)
+            adapter.notifyDataSetChanged()
+        }
 
     }
 
@@ -90,7 +102,6 @@ class CategoryListActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", null)
             .show()
     }
-
 
     private fun deleteCategory(category: Category) {
         AlertDialog.Builder(this)
