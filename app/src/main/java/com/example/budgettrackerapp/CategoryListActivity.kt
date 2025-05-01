@@ -30,6 +30,7 @@ class CategoryListActivity : AppCompatActivity() {
         db = AppDatabase.getDatabase(this)
         categoryDao = db.categoryDao()
 
+        
         categoryListView = findViewById(R.id.categoryListView)
         etNewCategory = findViewById(R.id.etNewCategory)
         btnAddCategory = findViewById(R.id.btnAddCategory)
@@ -42,7 +43,7 @@ class CategoryListActivity : AppCompatActivity() {
         categoryListView.adapter = adapter
 
         loadCategories()
-
+//For creating a new category after entering the details required
         btnAddCategory.setOnClickListener {
             val categoryName = etNewCategory.text.toString().trim()
             if (categoryName.isNotEmpty()) {
@@ -69,6 +70,7 @@ class CategoryListActivity : AppCompatActivity() {
         }
     }
 
+    //A function for loading all categories
     private fun loadCategories() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -82,7 +84,7 @@ class CategoryListActivity : AppCompatActivity() {
 
     }
 
-
+//A fuction for editing a category
     private fun showEditDialog(category: Category) {
         val editText = EditText(this)
         editText.setText(category.name)
@@ -103,6 +105,7 @@ class CategoryListActivity : AppCompatActivity() {
             .show()
     }
 
+    //A fuction for deleting a category
     private fun deleteCategory(category: Category) {
         AlertDialog.Builder(this)
             .setTitle("Delete Category")
