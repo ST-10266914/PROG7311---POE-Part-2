@@ -29,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
             val email = signupEmailEditText.text.toString()
             val password = signupPasswordEditText.text.toString()
 
+            //Validation for signing up to the app
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
